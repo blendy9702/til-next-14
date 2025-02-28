@@ -1,5 +1,14 @@
 # api 폴더의 이해
 
+- Next는 서버이다.
+- `흔히` FE 는 Next 구현 후 Vercel에 배포한다.
+- `흔히` BE 는 AWS 에 배포한다.
+  - BE 는 API 를 제공한다. request > DB > response
+  - postman, swagger, Excel
+  - Next도 서버라서 API 연결이 가능하다.
+    - request > DB > response 가능.
+    - 직접 DB 쿼리도 전달할 수 있다.
+- `흔히` DB 는 AWS 에 배포한다.
 - api 용도
 - http://localhost:3000/api/hello
 - https://fakestoreapi.com/
