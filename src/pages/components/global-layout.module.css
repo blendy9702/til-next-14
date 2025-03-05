@@ -1,0 +1,33 @@
+.container {
+  background-color: #fff;
+  max-width: 600px;
+  min-height: 100vh;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 30px 0px;
+  padding: 0 20px;
+}
+
+.header {
+  height: 60px;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 60px;
+}
+
+.header a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  gap: 20px;
+  color: #1e1e1e;
+}
+
+.main {
+  padding: 10px;
+}
+
+.footer {
+  padding: 100px 0px;
+  color: #1e1e1e;
+}
