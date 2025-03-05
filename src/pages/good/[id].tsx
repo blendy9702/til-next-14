@@ -1,11 +1,9 @@
 import { fetchOneGood } from "@/lib/fetch-one-good";
 import styles from "@/pages/good/[id].module.css";
-import {
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-  InferGetStaticPropsType,
-} from "next";
+import { GetServerSidePropsContext, InferGetStaticPropsType } from "next";
+import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 // 라우터가 동적인 경로가 필요로 한 상황이다.
 // http://localhost:3000/good/[id]   ===> 파라메터
 export function getStaticPaths() {
@@ -37,26 +35,55 @@ export async function getStaticProps(context: GetServerSidePropsContext) {
 export default function Page({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  if (data === null) {
+  const router = useRouter();
+  if (router.isFallback) {
+    return (
+      <>
+        <Head>
+          <title>해외 쇼핑몰 추천 서비스</title>
+          <meta name="discription" content="해외 상품 추천서비스입니다." />
+          <meta property="og:title" content="해외 쇼핑몰 추천 서비스" />
+          <meta
+            property="og:discription"
+            content="해외 상품 추천서비스입니다."
+          />
+          <meta property="og:image" content="/thumbnail.png" />
+        </Head>
+        <div>Loading...</div>
+      </>
+    );
+  }
+
+  // 데이터가 없는 경우
+  if (!data) {
     return <div>현재 데이터가 없습니다.</div>;
   }
   const { title, image, category, price, description, rating } = data;
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>
-        {title} <span>(${price})</span>
+    <>
+      <Head>
+        <title>{title} 상세정보</title>
+        <meta name="description" content="제품정보 없음" />
+        <meta property="og:title" content="제품정보 없음" />
+        <meta property="og:description" content="제품정보 없음" />
+        <meta property="og:image" content="/thumbnail.png" />
+      </Head>
+      <div className={styles.container}>
+        <div className={styles.title}>
+          {title} <span>(${price})</span>
+        </div>
+        <div
+          className={styles.cover_image}
+          style={{ backgroundImage: `url(${image})` }}
+        >
+          <Image src={image} alt={title} width={245} height={350} />
+        </div>
+        <div className={styles.category}>{category}</div>
+        <div className={styles.rating}>
+          Rating : {rating.rate} | {rating.count}
+        </div>
+        <div className={styles.description}>{description}</div>
       </div>
-      <div
-        className={styles.cover_image}
-        style={{ backgroundImage: `url(${image})` }}
-      >
-        <Image src={image} alt={title} width={245} height={350} />
-      </div>
-      <div className={styles.category}>{category}</div>
-      <div className={styles.rating}>
-        Rating : {rating.rate} | {rating.count}
-      </div>
-      <div className={styles.description}>{description}</div>
-    </div>
+    </>
   );
 }
